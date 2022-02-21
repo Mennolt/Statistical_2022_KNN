@@ -1,5 +1,7 @@
 import numpy as np
 from statistics import mode
+import time
+
 
 class KNN:
     def __init__(self, train_data, k : int):
@@ -22,12 +24,13 @@ class KNN:
 
         Output: A label that occurs most often in the nearest neighbours
         """
-
+        start = time.time()
         distances = self.calc_dists(point)
+        print(f"distances {time.time()-start}")
         #print(distances)
         shortest_distances = self.get_lowest(distances)
         #print(sort_distances)
-
+        print(f"shortest distances {time.time() - start}")
         #pick label that occurs most
         return mode(shortest_distances)
 
@@ -38,7 +41,7 @@ class KNN:
         :return: array of distances of each point in training data to new point,
                  with associated labels of training points
         """
-        distances = np.linalg.norm(self.train_data[:, 1:] - point, ord = 2, axis = 1) 
+        distances = np.linalg.norm(self.train_data[:, 1:] - point, ord=2, axis=1)
         #print(distances)
 
         return(np.c_[distances, self.train_data[:,0]])
