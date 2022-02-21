@@ -1,9 +1,13 @@
 import load_data
 import KNN
+import time
 
 if __name__ == "__main__":
+    start = time.time()
     data = load_data.load_data("MNIST_train_small.csv")
-    print(data)
+    print(f"data loading: {time.time()-start}")
+    #print(data)
     test_data = data[0][1:]
     classifier = KNN.KNN(data, 10)
-    classifier.predict_point(test_data)
+    print(classifier.predict_point(test_data))
+    print(f"total time: {time.time()-start}")
