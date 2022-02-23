@@ -82,7 +82,7 @@ class KNN:
         Output: A label that occurs most often in the nearest neighbours
         """
         self.k = self.k + 1
-        result =  self.predict_point(point[1:], point[0])
+        result = self.predict_point(point[1:], point[0])
         self.k = self.k - 1
         return result
 

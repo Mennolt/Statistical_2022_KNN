@@ -12,14 +12,18 @@ def loocv(X):
         for i in range(len(X)):
             # row to leave out
             test = X[i, :]
+            # label of the row
+            label = X[i, 0]
+
             # rest of the rows
             train_X = num.concatenate(X[0:i, :], X[i+1:, :])
 
             knn = KNN(train_X, k)
             # result from knn
-            result_y = knn.predict_point(test)
+            result_y = knn.predict_point_LOOCV(test)
             # error value for this point (might use a different calculation)
-            err += (X[i, 0]-result_y)**2
+            if label - result_y != 0:
+                err += 1
 
         # overall error
         err = err/len(X)
