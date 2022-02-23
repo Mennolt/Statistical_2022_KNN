@@ -16,7 +16,7 @@ class KNN:
         self.train_data = train_data
         self.k = k
 
-    def predict_point(self, point) -> int:
+    def predict_point(self, point, label = None) -> int:
         """
         Predicts the class of a single datapoint.
         Input:
@@ -32,7 +32,11 @@ class KNN:
         #print(sort_distances)
         print(f"shortest distances {time.time() - start}")
         #pick label that occurs most
-        return mode(shortest_distances)
+        if label == None:
+            return mode(shortest_distances)
+        else:
+            shortest_distances.remove(label)
+            return mode(shortest_distances)
 
     def calc_dists(self, point) -> np.ndarray:
         """
@@ -68,5 +72,19 @@ class KNN:
                 lowest_dist.append(val[0])
                 lowest_labels.append(val[1])
         return lowest_labels[:self.k]
+
+    def predict_point_LOOCV(self, point):
+        """
+        Predicts the class of a single datapoint that is in the training set.
+        Input:
+        point: a single datapoint of the same dimensions as the training data, including label
+
+        Output: A label that occurs most often in the nearest neighbours
+        """
+        self.k = self.k + 1
+        result =  self.predict_point(point[1:], point[0])
+        self.k = self.k - 1
+        return result
+
 
 
