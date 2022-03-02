@@ -1,14 +1,14 @@
 import numpy as num
 from KNN import KNN
 
-def loocv(X):
+def loocv(X, distance_metric=None):
 
     err_list = {}
 
     # test for k values from 1 to 20
     for k in range(1, 21):
         err = 0
-        knn = KNN(X, k)
+        knn = KNN(X, k, distance_metric)
 
         # conduct loocv for each row
         for i in range(len(X)):
