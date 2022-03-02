@@ -1,5 +1,6 @@
 import numpy as num
 from KNN import KNN
+import time
 
 def loocv(X):
 
@@ -7,6 +8,7 @@ def loocv(X):
 
     # test for k values from 1 to 20
     for k in range(1, 21):
+        start = time.time()
         err = 0
         knn = KNN(X, k)
 
@@ -30,5 +32,5 @@ def loocv(X):
         # overall error
         err = err/len(X)
         err_list.update({k: err})
-
+        print(f"finished k {k}, time: {int(time.time()-start)}")
     return err_list

@@ -26,11 +26,11 @@ class KNN:
         """
         start = time.time()
         distances = self.calc_dists(point)
-        print(f"distances {time.time()-start}")
+        #print(f"distances {time.time()-start}")
         #print(distances)
         shortest_distances = self.get_lowest(distances)
         #print(sort_distances)
-        print(f"shortest distances {time.time() - start}")
+        #print(f"shortest distances {time.time() - start}")
         #pick label that occurs most
         if label == None:
             return mode(shortest_distances)
@@ -40,7 +40,7 @@ class KNN:
 
     def calc_dists(self, point) -> np.ndarray:
         """
-        Calculates euclidean distances between input point and all other points
+        Calculates euclidean distances between input point and all points in training data
         :param point: a single datapoint of same dimensions as training data-labels
         :return: array of distances of each point in training data to new point,
                  with associated labels of training points
