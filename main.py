@@ -31,6 +31,7 @@ def assignment_1a():
     train_dict = {}
     test_dict = {}
 
+
     for k in range(1, 21):
         start = time.time()
 
@@ -40,25 +41,29 @@ def assignment_1a():
             result_y = knn.predict_point_LOOCV(point)
             if point[0] - result_y != 0:
                 err += 1
-        # overall error
-        err = err / len(data)
-        train_dict.update({k: err})
+        # overall % in error
+        end_err = err / len(data)
+        acc = 1 - end_err
+        #print(end_err, err, len(data))
+        train_dict.update({k: acc})
 
         err = 0
         for point in test_data:
             result_y = knn.predict_point(point[1:])
             if point[0] - result_y != 0:
                 err += 1
-        # overall error
-        err = err / len(data)
-        test_dict.update({k: err})
+        # overall % in error
+        end_err = err / len(data)
+        acc = 1 - end_err
+        test_dict.update({k: acc})
 
     print(train_dict)
     print(test_dict)
 
     result_data = {"train": train_dict, "test": test_dict}
-    with open('result_a.json', 'w') as f:
-        json.dump(result_data, f)
+    #with open('result_a.json', 'w') as f:
+    #    json.dump(result_data, f)
+
 
 def assignment_1e(path : str):
     """
@@ -90,8 +95,10 @@ def assignment_1e(path : str):
 
     with open('result_e_partial.json', 'w') as f:
         json.dump(train_dict, f)
+    print("program finished")
 
 
 
 if __name__ == "__main__":
-    assignment_1e("MNIST_train_small.csv")
+    assignment_1a()
+    #assignment_1e("MNIST_train_small.csv")
