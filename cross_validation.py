@@ -7,6 +7,7 @@ def loocv(X, distance_metric=None):
 
     # test for k values from 1 to 20
     for k in range(1, 21):
+        print(f"\ttesting k = {k}")
         err = 0
         knn = KNN(X, k, distance_metric)
 
