@@ -72,7 +72,7 @@ def assignment_1e(path : str):
     :return:
     """
     data = load_data.load_data(path)
-    k_list = [1]#,10,100,1000]
+    k_list = [1]#,3,5,10]
 
     train_dict = {}
     for k in k_list:
@@ -89,9 +89,10 @@ def assignment_1e(path : str):
             if i % 100 == 0:
                 print(f"K {k}, I {i}, time {int(time.time()-start)}")
             i += 1
-        # overall error
-        err = err / len(data)
-        train_dict.update({k: err})
+        # overall % in error
+        tot_err = err / len(data)
+        acc = 1-tot_err
+        train_dict.update({k: acc})
 
     with open('result_e_partial.json', 'w') as f:
         json.dump(train_dict, f)
@@ -100,5 +101,5 @@ def assignment_1e(path : str):
 
 
 if __name__ == "__main__":
-    assignment_1a()
-    #assignment_1e("MNIST_train_small.csv")
+    #assignment_1a()
+    assignment_1e("MNIST_train.csv")
