@@ -2,7 +2,7 @@ import numpy as num
 from KNN import KNN
 import time
 
-def loocv(X):
+def loocv(X, distance_metric=None):
 
     err_list = {}
 
@@ -10,7 +10,7 @@ def loocv(X):
     for k in range(1, 21):
         start = time.time()
         err = 0
-        knn = KNN(X, k)
+        knn = KNN(X, k, distance_metric)
 
         # conduct loocv for each row
         for i in range(len(X)):

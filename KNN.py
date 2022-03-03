@@ -4,17 +4,20 @@ import time
 
 
 class KNN:
-    def __init__(self, train_data, k : int):
+    def __init__(self, train_data, k : int, distance_metric=None):
         """
         Initializes KNN class
 
         Inputs:
         train_data: the training data, of which column 1 is the labels
         k: the number of nearest neighbours to consider
+        distance_metric: A function which takes one datapoint and the training array as input and returns an np array
+        of distances as output, in the same order as the training array.
         """
 
         self.train_data = train_data
         self.k = k
+        self.distance_metric = distance_metric
 
     def predict_point(self, point, label = None) -> int:
         """
@@ -40,15 +43,22 @@ class KNN:
 
     def calc_dists(self, point) -> np.ndarray:
         """
-        Calculates euclidean distances between input point and all points in training data
+        Calculates distances between input point and all other points, using given distance metric. If no
+        distane metric was given, euclidean distance is used.
         :param point: a single datapoint of same dimensions as training data-labels
         :return: array of distances of each point in training data to new point,
                  with associated labels of training points
         """
-        distances = np.linalg.norm(self.train_data[:, 1:] - point, ord=2, axis=1)
-        #print(distances)
+        if not self.distance_metric:
+            distances = np.linalg.norm(self.train_data[:, 1:] - point, ord=2, axis=1)
+            #print(distances)
 
+        else:
+            distances = self.distance_metric(point, self.train_data[:, 1:])
+
+        #print(distances)
         return(np.c_[distances, self.train_data[:,0]])
+
 
     def get_lowest(self, distance_list : np.ndarray):
         """
