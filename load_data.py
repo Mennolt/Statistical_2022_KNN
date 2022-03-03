@@ -24,7 +24,9 @@ class Scale:
             else:
                 out = Scale.bool_scaler(out,kwargs['val'])
         return(out)
-
+    
+    #Approximates the cut off for 0 based on an inputted percent or through the default 90
+    #The cut off is based solely on the percentiles of all non zero elements
     def val_approximater(data,**kwargs):
         data_wo_first = data[:, 1:]
         non_zero_arr = data_wo_first[np.nonzero(data_wo_first)]
@@ -38,6 +40,7 @@ class Scale:
         out = Scale.bool_scaler(data,cut_off)
         return(out)
 
+    #Computes actual 0 and 1 setter
     def bool_scaler(data, val):
         data = np.where(data < val, 0, 1)
         return(data)
