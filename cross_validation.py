@@ -6,12 +6,14 @@ def loocv(X, distance_metric=None):
     err_list = {}
 
     # test for k values from 1 to 20
-    for k in range(1, 21):
+    for k in range(5,7):
+        print("loocv k loop " + str(k))
         err = 0
         knn = KNN(X, k, distance_metric)
 
         # conduct loocv for each row
         for i in range(len(X)):
+
             # row to leave out
             test = X[i, :]
             # label of the row
