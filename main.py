@@ -3,6 +3,8 @@ import KNN
 import time
 import cross_validation
 import json
+import Minkowski
+from functools import partial
 
 
 
@@ -73,13 +75,15 @@ def assignment_1e(path : str):
     """
     data = load_data.load_data(path)
     k_list = [1]#,3,5,10]
+    p = 13
+    dist_met = partial(Minkowski.Minkowski_distance, p=p)
 
     train_dict = {}
     for k in k_list:
         i = 0
         start = time.time()
 
-        knn = KNN.KNN(data, k)
+        knn = KNN.KNN(data, k, distance_metric = dist_met)
         err = 0
         for point in data:
             result_y = knn.predict_point_LOOCV(point)
