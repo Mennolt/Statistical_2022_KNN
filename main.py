@@ -75,7 +75,7 @@ def assignment_1e(path : str):
     """
     data = load_data.load_data(path)
     k_list = [1]#,3,5,10]
-    p = 13
+    p = 14
     dist_met = partial(Minkowski.Minkowski_distance, p=p)
 
     train_dict = {}
