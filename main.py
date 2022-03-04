@@ -75,7 +75,7 @@ def assignment_1e(path : str):
     """
     data = load_data.load_data(path)
     k_list = [1]#,3,5,10]
-    p = 13
+    p = 14
     dist_met = partial(Minkowski.Minkowski_distance, p=p)
 
     train_dict = {}
@@ -91,7 +91,9 @@ def assignment_1e(path : str):
                 err += 1
 
             if i % 100 == 0:
-                print(f"K {k}, I {i}, time {int(time.time()-start)}")
+                print(f"K {k}, I {i}, time {int(time.time()-start)}, err {err}")
+                with open(f"result_e_k_{k}_i_{i}", 'w') as f:
+                    f.write(err)
             i += 1
         # overall % in error
         tot_err = err / len(data)
