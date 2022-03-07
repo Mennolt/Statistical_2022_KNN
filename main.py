@@ -131,5 +131,5 @@ def assignment_1f(k):
 if __name__ == "__main__":
     #assignment_1a()
     assignment_1e2()
-    assignment_1f(3)
+    assignment_1f(3) #running time: 1h 7min 9sec. Loss: 0.0283
     
