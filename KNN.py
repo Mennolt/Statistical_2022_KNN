@@ -1,6 +1,7 @@
 import numpy as np
 from statistics import mode
 import time
+from tqdm import tqdm
 
 
 class KNN:
@@ -95,6 +96,19 @@ class KNN:
         result = self.predict_point(point[1:], point[0])
         self.k = self.k - 1
         return result
+    
+    def calc_loss(self, test_data):
+        '''
+        calculates overall loss on test data. Uses 0-1 loss.
+        
+        :param test_data: data to be classified, of which column 1 are the labels.
+        '''
+        loss = 0
+        for i in tqdm(range(test_data.shape[0])):
+            if self.predict_point(test_data[i,1:]) != test_data[i,0]:
+                loss += 1
+                
+        return loss / test_data.shape[0]
 
 
 

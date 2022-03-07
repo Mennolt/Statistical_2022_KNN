@@ -103,9 +103,33 @@ def assignment_1e(path : str):
     with open('result_e_partial.json', 'w') as f:
         json.dump(train_dict, f)
     print("program finished")
-
+    
+def assignment_1e2():
+    '''
+    Loads output files from assignment_1e and prints accuracy for each k value
+    '''
+    k_dict = {}
+    for k in '1','3','5','10':
+        f = open(f'k{k}.json')
+        k_dict.update(json.load(f))
+    print(k_dict)
+    
+def assignment_1f(k):
+    '''
+    returns the average loss on the test set for the knn
+    
+    :param k: the k value to be used for the knn
+    '''
+    test_data = load_data.load_data('MNIST_test.csv')
+    train_data = load_data.load_data('MNIST_train.csv')
+    
+    model = KNN.KNN(train_data, k)
+    print(model.calc_loss(test_data))
+    
 
 
 if __name__ == "__main__":
     #assignment_1a()
-    assignment_1e("MNIST_train.csv")
+    assignment_1e2()
+    assignment_1f(3)
+    
