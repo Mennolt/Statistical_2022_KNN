@@ -1,10 +1,11 @@
 import load_data
 import KNN
 import time
-import cross_validation
+from cross_validation import loocv
 import json
 import Minkowski
 from functools import partial
+import matplotlib.pyplot as plt
 
 
 
@@ -67,6 +68,45 @@ def assignment_1a():
     #    json.dump(result_data, f)
 
 
+def assignment_1b(path : str):
+    train_data = load_data.load_data(path)
+    err_dict = loocv(train_data)
+    with open('result_b.json', 'w') as f:
+        json.dump(err_dict, f)
+    print("part b done.")
+
+
+def plot_b(file_name):
+
+    # plotting
+    result_dict_b = {}
+    with open(file_name) as result_b:
+        result_file_b = json.load(result_b)
+        result_str_b = json.dumps(result_file_b)
+        result_dict_b = json.loads(result_str_b)
+
+    x = list(result_dict_b.keys())
+    y = list(result_dict_b.values())
+    y_accuracy = []
+    y_accuracy[:] = [1-value for value in y]
+    # print(y_accuracy)
+
+    plt.plot(x, y)
+    plt.title("Errors acquired by LOOCV for each k value")
+    plt.grid()
+    plt.xlabel("k values")
+    plt.ylabel("errors")
+    plt.show()
+
+    plt.plot(x, y_accuracy)
+    plt.title("Accuracy values acquired by LOOCV for each k value")
+    plt.grid()
+    plt.xlabel("k values")
+    plt.ylabel("accuracy")
+    plt.show()
+
+
+
 def assignment_1e(path : str):
     """
     Executes research for assignment 1e
@@ -74,7 +114,7 @@ def assignment_1e(path : str):
     :return:
     """
     data = load_data.load_data(path)
-    k_list = [1]#,3,5,10]
+    k_list = [5]#,3,5,10]
     p = 14
     dist_met = partial(Minkowski.Minkowski_distance, p=p)
 
@@ -103,7 +143,7 @@ def assignment_1e(path : str):
     with open('result_e_partial.json', 'w') as f:
         json.dump(train_dict, f)
     print("program finished")
-    
+
 def assignment_1e2():
     '''
     Loads output files from assignment_1e and prints accuracy for each k value
@@ -113,23 +153,29 @@ def assignment_1e2():
         f = open(f'k{k}.json')
         k_dict.update(json.load(f))
     print(k_dict)
-    
+
 def assignment_1f(k):
     '''
     returns the average loss on the test set for the knn
-    
+
     :param k: the k value to be used for the knn
     '''
     test_data = load_data.load_data('MNIST_test.csv')
     train_data = load_data.load_data('MNIST_train.csv')
-    
+
     model = KNN.KNN(train_data, k)
     print(model.calc_loss(test_data))
-    
 
 
 if __name__ == "__main__":
+
+    # assignment_1a()
+    # assignment_1b("MNIST_train_small.csv")
+    # assignment_1e("MNIST_train_small.csv")
+
     #assignment_1a()
-    assignment_1e2()
-    assignment_1f(3) #running time: 1h 7min 9sec. Loss: 0.0283
-    
+    # assignment_1e2()
+    # assignment_1f(3) #running time: 1h 7min 9sec. Loss: 0.0283
+
+    # assignment_1e("MNIST_train.csv")
+    plot_b("result_b.json")
