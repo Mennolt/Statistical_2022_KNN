@@ -34,9 +34,7 @@ class Scale:
             percent = kwargs['percent']
         else:
             percent = 90
-        print(np.mean(non_zero_arr))
         cut_off = np.percentile(non_zero_arr,percent)
-        print(cut_off)
         out = Scale.bool_scaler(data,cut_off)
         return(out)
 
