@@ -6,11 +6,11 @@ import Minkowski
 import pandas as pd
 from functools import partial
 
-data = load_data.load_data("MNIST_train_small.csv")
+data = load_data.load_data("MNIST_train_small.csv",scale = True)
 
 loss_list = []
 
-for p in range(1,16): #test all p in range 1 up to and incl 15
+for p in range(1,3): #test all p in range 1 up to and incl 15
     print(f"testing p = {p}")
     dist_met = partial(Minkowski.Minkowski_distance, p = p) #define a function that is the minkowski distance but with a set p
     loss_dict = cross_validation.loocv(data, distance_metric = dist_met)

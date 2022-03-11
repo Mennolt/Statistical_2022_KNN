@@ -14,6 +14,7 @@ def loocv(X, distance_metric=None):
 
         # conduct loocv for each row
         for i in range(len(X)):
+
             # row to leave out
             test = X[i, :]
             # label of the row
