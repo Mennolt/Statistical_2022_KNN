@@ -132,7 +132,9 @@ def assignment_1e(path : str):
                 err += 1
 
             if i % 100 == 0:
-                print(f"K {k}, I {i}, time {int(time.time()-start)}")
+                print(f"K {k}, I {i}, time {int(time.time()-start)}, err {err}")
+                with open(f"result_e_k_{k}_i_{i}.txt", 'w') as f:
+                    f.write(str(err))
             i += 1
         # overall % in error
         tot_err = err / len(data)
@@ -156,6 +158,7 @@ def assignment_1e2():
 def assignment_1f(k):
     '''
     returns the average loss on the test set for the knn
+
     :param k: the k value to be used for the knn
     '''
     test_data = load_data.load_data('MNIST_test.csv')
